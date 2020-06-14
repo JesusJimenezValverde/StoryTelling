@@ -60,11 +60,11 @@ class Plane{
   }
   
   int getSeatXPos(){
-    return posX;
+    return posX + 110;
   }
   
   int getSeatYPos(){
-    return posY;
+    return posY + 60;
   }
   
 }
