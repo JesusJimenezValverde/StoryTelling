@@ -31,8 +31,8 @@ SynthDef(\alarm, {
 (
 SynthDef(\explotion, {
 	var explotion, envelope, out;
-	envelope = Env.perc(0,0.5, curve: 0);//Por default es linear entonces todo bien
-	explotion = Mix.ar([LPF.ar(WhiteNoise.ar(EnvGen.kr(envelope)), 30) * 100
+	envelope = Env.perc(0, 2, curve: 0);//Por default es linear entonces todo bien
+	explotion = Mix.ar([LPF.ar(WhiteNoise.ar(EnvGen.kr(envelope)), 60) * 100
 
 	]);
 	out = explotion; //Volume Control
@@ -42,8 +42,14 @@ SynthDef(\explotion, {
 
 Synth("explotion");
 
-
-//Failing motor {WhiteNoise.ar * EnvGen.ar(Env.perc(0, 0.02, curve: 0), Dust.kr(4))* 0.2}.play
+(
+ p = Pbind(
+	\amp, 0.6,
+	\freq, Pseq([60, 64, 66, 69, 71, 69, 66, 64].midicps,inf),
+	\dur, 0.4,
+	\releaseTime, 0.6
+);
+)
 
 ///////////////////////////////////////////////////////////////////////
 (
@@ -51,18 +57,21 @@ Synth("explotion");
 
   var dura, total_dur, tiempoMedio;
 
+	//p.play;
+
 	a = Synth(\plane, [\dur: 15]);
 	12.wait(); //Da chance a la avioneta de levantarse
 	// Play the alarm
-	5.do({
+	4.do({
 		Synth(\alarm, [repeats: 2]);
 		2.wait();
 	});
-	2.wait();
-
 	//Make explotion
+	Synth("explotion");
 	a.free;
-
+	3.wait();
+	//p.stop;
 }).play;
 )
+
 
