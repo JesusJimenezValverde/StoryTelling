@@ -4,7 +4,7 @@
 SynthDef.new(\plane, {
 	arg dur = 10, time = 0.6;
 	var envelope, drive, motor;
-	envelope = Env.new([2, 25, 25, 20, 23, 15, 10, 0],[10, 4, 1, 2, 1, 1], curve: [4,0,-5, 5,0,-3,-3]);
+	envelope = Env.new([2, 25, 27, 23, 20, 15, 10, 0],[5, 12, 2, 3, 4, 1], curve: [4,0,-5, 5,0,-3,-3]);
 	drive = LFSaw.ar(EnvGen.kr(envelope), 1, 0.5, 0.5);
 	motor = ((
 	SinOsc.ar(EnvGen.kr(envelope), mul:20) +
@@ -39,34 +39,57 @@ SynthDef(\explotion, {
 	Out.ar(0, Pan2.ar(out, [10000|0]));
 }).add;
 )
-
-Synth("explotion");
-
 (
- p = Pbind(
-	\amp, 0.6,
-	\freq, Pseq([60, 64, 66, 69, 71, 69, 66, 64].midicps,inf),
-	\dur, 0.4,
-	\releaseTime, 0.6
-);
+MIDIClient.init;
+MIDIClient.destinations;
+m = MIDIOut.new(1); //manda notas a processing
+p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
 )
-
 ///////////////////////////////////////////////////////////////////////
+
 (
  Task({
 
-  var dura, total_dur, tiempoMedio;
+  var dura, total_dur, tiempoMedio, high = 0;
 
-	//p.play;
-
-	a = Synth(\plane, [\dur: 15]);
-	12.wait(); //Da chance a la avioneta de levantarse
-	// Play the alarm
-	4.do({
-		Synth(\alarm, [repeats: 2]);
-		2.wait();
+	// AQUI ESTA PARADO A LA PAR DEL AVION Hablando
+	5.do({
+		m.noteOn(1,60,5);
+		p.noteOn(0,40+rrand(0,5),40);
+		"Nota enviada".postln;
+		1.wait();
 	});
-	//Make explotion
+
+	//El viejito se monta al avion
+	m.noteOn(1,61,100);
+	5.wait();
+
+	// El avion se levanta 62 en nota midi -->nivel de piso
+	// Max level --> nota 84
+	a = Synth(\plane, [\dur: 20]);
+	4.wait();
+	12.do({
+		1.wait();
+		high = high + 2;
+		m.noteOn(1,60 + high,5);
+		p.noteOn(0,60 + high,rrand(60,100));
+	});
+
+	// Suena la alarma el avion cae
+	5.do({
+		1.2.wait();
+		high = high - 6;
+		m.noteOn(1,60 + high,5);
+		p.noteOn(0,60 + high,rrand(60,100));
+		[60+high].postln;
+		1.wait();
+		high = high + 2;
+		Synth(\alarm, [repeats: 2]);
+	});
+
+
+	//Make explotion nota midi 10
+	m.noteOn(1,10,10);
 	Synth("explotion");
 	a.free;
 	3.wait();
