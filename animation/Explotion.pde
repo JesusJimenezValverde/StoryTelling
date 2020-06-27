@@ -12,7 +12,7 @@ class Explotion {
     translate(posX, posY);
     for (int i = 6; i>0; i--){ 
       rotate(frameCount / -100.0+i*20);
-      fill(color(random(255), random(255), random(255)));
+      fill(color(255, random(255), random(255)));
       star(0, 0, 40+i*20, 70+i*20, 5+i*2); 
     }    
     popMatrix();
