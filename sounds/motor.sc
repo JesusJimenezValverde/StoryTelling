@@ -87,7 +87,7 @@ p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
 		p.noteOn(0,60 + high,rrand(60,100));
 		high = high + 2;
 	});
-	0.1.wait();
+	0.3.wait();
 	m.noteOn(1,10,10);
 
 	//Make explotion nota midi 10
