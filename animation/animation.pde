@@ -6,6 +6,7 @@ Floor floor = new Floor();
 Cloud cloud1 = new Cloud();
 Cloud cloud2 = new Cloud();
 Cloud cloud3 = new Cloud();
+Explotion explotion = new Explotion(350,450);
 
 int planeHeight = 0;
 
@@ -39,11 +40,11 @@ void draw(){
   pushMatrix();
   background(55, 175, 222);
   
-  //If flying
   if (sceneNumber == 1){
-    
+    boy.showText("Qué tuanis un\n vuelito hoy!");
   } else
   if (sceneNumber == 2){
+    boy.showText("Vamo a darle");
     plane.setPos(350, 0);
     boy.setPos(int(plane.getSeatXPos()), int(plane.getSeatYPos()));
   } else
@@ -65,6 +66,7 @@ void draw(){
   }
   
   
+  
   cloud1.draw();
   cloud2.draw();
   cloud3.draw();
@@ -73,6 +75,9 @@ void draw(){
   boy.draw();
   plane.draw();
   
+  if (sceneNumber == 4){
+    explotion.draw(); 
+  }
   
   popMatrix();
   time += 0.05;
@@ -109,6 +114,9 @@ void noteOn(int channel, int pitch, int velocity) {
     if (pitch == 0){
       plane.stop();
       boy.setHappy(false);
+      boy.showText("NOOOOOOOO!");
+      boy.setLAR(130);
+      boy.setRAR(50);
     } else {
       plane.start();
     }

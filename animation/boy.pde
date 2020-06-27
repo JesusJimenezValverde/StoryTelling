@@ -9,6 +9,8 @@ class Boy {
   
   boolean happy = true;
   
+  String text = "";
+  
   Boy(int initX, int initY){
     posX = initX;
     posY = initY;
@@ -40,11 +42,24 @@ class Boy {
     } else {
       arc(0, 10, 10, 10, PI, TWO_PI, OPEN);
     }
+    
+    textSize(20);
+    fill(255);
+    text(text, 35, -40); 
+    
     popMatrix();
   }
   
   void setHappy(boolean happy){
     this.happy = happy; 
+  }
+  
+  void showText(String text){
+    this.text = text;
+  }
+  
+  void hideText(){
+    this.text = "";
   }
   
   void setPos(int posX, int posY){

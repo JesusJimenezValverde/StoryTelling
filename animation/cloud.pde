@@ -1,7 +1,7 @@
 
 
 class Cloud{
-  int posX = -100;
+  int posX = -150;
   int posYOffset = 100;
   public Cloud(){
     posX += int(random(-200,200));
