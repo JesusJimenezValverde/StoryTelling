@@ -90,16 +90,24 @@ class Plane{
     popMatrix();
   }
   
-  int getSeatXPos(){
+  void goDown(){
+    posY++; 
+  }
+  
+  void goUp(){
+    posY--; 
+  }
+  
+  float getSeatXPos(){
     return posX + 110;
   }
   
-  int getSeatYPos(){
+  float getSeatYPos(){
     return posY + 60;
   }
   
-  int getHeight(){
-    return posY + 140;
+  float getHeight(){
+    return 350 - posY;
   }
   
   void setPos(int x, int y){

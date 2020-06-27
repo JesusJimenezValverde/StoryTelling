@@ -2,7 +2,11 @@
 
 class Cloud{
   int posX = -100;
-  public Cloud(){}
+  int posYOffset = 100;
+  public Cloud(){
+    posX += int(random(-200,200));
+    posYOffset += int(random(-100,100));
+  }
   
   
   void draw(){
@@ -10,16 +14,17 @@ class Cloud{
     strokeWeight(0);
     stroke(255);
     fill(255);
-    translate(posX, 100);
-    circle(10,20,30);
+    translate(posX, posYOffset);
+    circle(5,15,30);
+    circle(15,10,30);
+    circle(20,20,30);
+    circle(25,15,30);
+    circle(25,5,30);
     circle(30,20,30);
-    circle(60,20,30);
-    circle(0,0,30);
-    circle(20,0,30);
-    circle(40,0,30);
-    circle(10,40,30);
-    circle(30,40,30);
-    circle(60,40,30);
+    circle(35,10,30);
+    circle(40,5,30);
+    circle(45,15,30);
+    circle(50,10,30);
     popMatrix();
   }
   

@@ -85,7 +85,6 @@ p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
 		high = high - 6;
 		m.noteOn(2,60 + high,5);
 		p.noteOn(0,60 + high,rrand(60,100));
-		[60+high].postln;
 		high = high + 2;
 	});
 	0.1.wait();

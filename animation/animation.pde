@@ -3,7 +3,9 @@ import themidibus.*;
 Boy boy = new Boy(300,300);
 Plane plane = new Plane(0,0);
 Floor floor = new Floor();
-Cloud cloud = new Cloud();
+Cloud cloud1 = new Cloud();
+Cloud cloud2 = new Cloud();
+Cloud cloud3 = new Cloud();
 
 int planeHeight = 0;
 
@@ -43,25 +45,30 @@ void draw(){
   } else
   if (sceneNumber == 2){
     plane.setPos(350, 0);
-    boy.setPos(plane.getSeatXPos(), plane.getSeatYPos());
+    boy.setPos(int(plane.getSeatXPos()), int(plane.getSeatYPos()));
   } else
   if (sceneNumber == 3){
-    cloud.move();
+    cloud1.move();
+    cloud2.move();
+    cloud3.move();
     //Set plane height
-    plane.setPos(350, planeHeight);
-    /*
-    if (plane.getHeight() < planeHeight - 1){
-      plane.setPos(350, plane.getHeight() + (planeHeight - plane.getHeight()) / 60 ); 
+    //plane.setPos(350, planeHeight);
+    
+    if (plane.getHeight() < planeHeight){
+      plane.goUp();
     } else
-    if (plane.getHeight() > planeHeight + 1){
-      plane.setPos(350, plane.getHeight() - (plane.getHeight() - planeHeight) / 60 ); 
+    if (plane.getHeight() > planeHeight){
+      plane.goDown();
     }
-    */
-    boy.setPos(plane.getSeatXPos(), plane.getSeatYPos());
+    
+    boy.setPos(int(plane.getSeatXPos()), int(plane.getSeatYPos()));
   }
   
   
-  cloud.draw();
+  cloud1.draw();
+  cloud2.draw();
+  cloud3.draw();
+  
   floor.draw();
   boy.draw();
   plane.draw();
@@ -94,7 +101,9 @@ void noteOn(int channel, int pitch, int velocity) {
     }
   } else 
   if (channel == 2){
-    planeHeight = int(map(pitch, 62, 84, 0, 300)); 
+    println(pitch);
+    planeHeight = int(map(pitch, 62, 84, 0, 200));
+    println(planeHeight);
   } else 
   if (channel == 3){
     if (pitch == 0){
@@ -104,6 +113,4 @@ void noteOn(int channel, int pitch, int velocity) {
       plane.start();
     }
   }
-  
-  println("Channel: " + str(mbChannel) + " Number: " + str(mbNote) + " Value: " + str(mbValue));
 }
