@@ -44,6 +44,7 @@ void draw(){
     boy.showText("Qué tuanis un\n vuelito hoy!");
     floor.setCameraHeight(0);
     plane.setPos(200, 0);
+    plane.stop();
     boy.setPos(600, 480);
     boy.setLAR(-100);
     boy.setRAR(-80);
@@ -103,6 +104,9 @@ void noteOn(int channel, int pitch, int velocity) {
   if (channel == 1) {
     if (pitch == 60){
       sceneNumber = 1; 
+      cloud1.setPosition();
+      cloud2.setPosition();
+      cloud3.setPosition();
     } else 
     if (pitch == 61){
       sceneNumber = 2;
@@ -121,6 +125,7 @@ void noteOn(int channel, int pitch, int velocity) {
   } else 
   if (channel == 3){
     if (pitch == 0){
+      sceneNumber = 3;
       plane.stop();
       boy.setHappy(false);
       boy.showText("NOOOOOOOO!");

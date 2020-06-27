@@ -4,8 +4,7 @@ class Cloud{
   int posX = -150;
   int posYOffset = 100;
   public Cloud(){
-    posX += int(random(-200,200));
-    posYOffset += int(random(-100,100));
+    setPosition();
   }
   
   
@@ -30,5 +29,9 @@ class Cloud{
   
   void move(){
     posX++; 
+  }
+  void setPosition(){
+    posX += int(random(-200,200));
+    posYOffset += int(random(-100,100));
   }
 }

@@ -97,13 +97,17 @@ p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
 	};
 
 	//////////////////////////// THE SEQUENCE /////////////////////////
-	bySide.play; //SCENE 1
+	//bySide.play; //SCENE 1
 
-	//goUp.play;   //Plane GO UP
+	crash.play;
+
+	goUp.play;   //Plane GO UP
+
+	bySide.play;
 
 	goDown.play; //Plane GO DOWN
 
-	goUp.play;   //Plane GO UP
+	//goUp.play;   //Plane GO UP
 
 	crash.play; //Explode
 

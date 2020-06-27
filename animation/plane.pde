@@ -64,7 +64,6 @@ class Plane{
     ellipse(300,210,25,25);
     
     
-    //
     fill(100);
     rect(0,135,10,10);
     fill(0);
