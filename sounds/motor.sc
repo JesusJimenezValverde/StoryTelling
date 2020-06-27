@@ -49,52 +49,64 @@ p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
 
 (
  Task({
+	var total_dur, tiempoMedio, high = 0, goDown, goUp, bySide, crash;
+	//-------- Instrucciones MIDI y sonidos para hacer el avion caer --------\\
+	goDown = {
+		m.noteOn(3,0,0);
+		high = 24;
+		5.do({
+			Synth(\alarm, [repeats: 2]);
+			1.2.wait();
+			high = high - 6;
+			m.noteOn(2,60 + high,5);
+			p.noteOn(0,60 + high,rrand(60,100));
+			high = high + 2;
+		});
+	};
+	//-------- Instrucciones MIDI y sonidos para hacer el avion elevarse --------\\
+	goUp = {
+		m.noteOn(1,61,100);//El viejito se monta al avion
+		m.noteOn(3,1,0); //El rotor del avion enciende
+		// Min level:0 --> N62
+		// Max level:200 --> N84
+		a = Synth("plane");
+		4.wait();
+		m.noteOn(1,62,100);
+		12.do({
+			1.wait();
+			high = high + 2;
+			m.noteOn(2,60 + high,5);
+			p.noteOn(0,60 + high,rrand(60,100));
+		});
+	};
+	//-------- Instrucciones MIDI y sonidos para escena 1 --------\\
+	bySide = {
+		m.noteOn(1,60,5);
+		5.do({
+			p.noteOn(0,40+rrand(0,5),40);
+			1.wait();
+		});
+	};
+	//-------- Instrucciones MIDI y sonidos para el choque --------\\
+	crash = {
+		0.3.wait();
+		m.noteOn(1,10,10); //Crash --> N10
+		Synth("explotion");
+		a.free;
+		3.wait();
+	};
 
-  var dura, total_dur, tiempoMedio, high = 0;
+	//////////////////////////// THE SEQUENCE /////////////////////////
+	bySide.play; //SCENE 1
 
-	// AQUI ESTA PARADO A LA PAR DEL AVION Hablando
-	m.noteOn(1,60,5);
-	5.do({
-		p.noteOn(0,40+rrand(0,5),40);
-		"Nota enviada".postln;
-		1.wait();
-	});
+	//goUp.play;   //Plane GO UP
 
-	//El viejito se monta al avion
-	m.noteOn(1,61,100);
+	goDown.play; //Plane GO DOWN
 
-	m.noteOn(3,1,0);
+	goUp.play;   //Plane GO UP
 
-	// El avion se levanta 62 en nota midi -->nivel de piso
-	// Max level --> nota 84
-	a = Synth(\plane, [\dur: 20]);
-	4.wait();
-	m.noteOn(1,62,100);
-	12.do({
-		1.wait();
-		high = high + 2;
-		m.noteOn(2,60 + high,5);
-		p.noteOn(0,60 + high,rrand(60,100));
-	});
+	crash.play; //Explode
 
-	m.noteOn(3,0,0);
-	// Suena la alarma el avion cae
-	5.do({
-		Synth(\alarm, [repeats: 2]);
-		1.2.wait();
-		high = high - 6;
-		m.noteOn(2,60 + high,5);
-		p.noteOn(0,60 + high,rrand(60,100));
-		high = high + 2;
-	});
-	0.3.wait();
-	m.noteOn(1,10,10);
-
-	//Make explotion nota midi 10
-	Synth("explotion");
-	a.free;
-	3.wait();
-	//p.stop;
 }).play;
 )
 

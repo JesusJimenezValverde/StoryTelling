@@ -42,6 +42,12 @@ void draw(){
   
   if (sceneNumber == 1){
     boy.showText("Qué tuanis un\n vuelito hoy!");
+    floor.setCameraHeight(0);
+    plane.setPos(200, 0);
+    boy.setPos(600, 480);
+    boy.setLAR(-100);
+    boy.setRAR(-80);
+    boy.setHappy(true);
   } else
   if (sceneNumber == 2){
     boy.showText("Vamo a darle");
@@ -76,6 +82,8 @@ void draw(){
   plane.draw();
   
   if (sceneNumber == 4){
+    plane.setPos(350, 0);
+    boy.setPos(int(plane.getSeatXPos()), int(plane.getSeatYPos()));
     explotion.draw(); 
   }
   
@@ -91,6 +99,7 @@ void noteOn(int channel, int pitch, int velocity) {
   mbChannel = channel;
   mbNote = pitch;
   mbValue = velocity;
+  println("New note --> "+pitch);
   if (channel == 1) {
     if (pitch == 60){
       sceneNumber = 1; 
@@ -103,12 +112,12 @@ void noteOn(int channel, int pitch, int velocity) {
     } else 
     if (pitch == 10){
       sceneNumber = 4;
+      println("Crash");
     }
   } else 
   if (channel == 2){
-    println(pitch);
     planeHeight = int(map(pitch, 62, 84, 0, 200));
-    println(planeHeight);
+    println("Plane High -->"+planeHeight);
   } else 
   if (channel == 3){
     if (pitch == 0){
