@@ -53,8 +53,8 @@ p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
   var dura, total_dur, tiempoMedio, high = 0;
 
 	// AQUI ESTA PARADO A LA PAR DEL AVION Hablando
+	m.noteOn(1,60,5);
 	5.do({
-		m.noteOn(1,60,5);
 		p.noteOn(0,40+rrand(0,5),40);
 		"Nota enviada".postln;
 		1.wait();
@@ -62,34 +62,36 @@ p = MIDIOut.new(0); //manda a que suene el sequencer de la compu xD
 
 	//El viejito se monta al avion
 	m.noteOn(1,61,100);
-	5.wait();
+
+	m.noteOn(3,1,0);
 
 	// El avion se levanta 62 en nota midi -->nivel de piso
 	// Max level --> nota 84
 	a = Synth(\plane, [\dur: 20]);
 	4.wait();
+	m.noteOn(1,62,100);
 	12.do({
 		1.wait();
 		high = high + 2;
-		m.noteOn(1,60 + high,5);
+		m.noteOn(2,60 + high,5);
 		p.noteOn(0,60 + high,rrand(60,100));
 	});
 
+	m.noteOn(3,0,0);
 	// Suena la alarma el avion cae
 	5.do({
+		Synth(\alarm, [repeats: 2]);
 		1.2.wait();
 		high = high - 6;
-		m.noteOn(1,60 + high,5);
+		m.noteOn(2,60 + high,5);
 		p.noteOn(0,60 + high,rrand(60,100));
 		[60+high].postln;
-		1.wait();
 		high = high + 2;
-		Synth(\alarm, [repeats: 2]);
 	});
-
+	0.1.wait();
+	m.noteOn(1,10,10);
 
 	//Make explotion nota midi 10
-	m.noteOn(1,10,10);
 	Synth("explotion");
 	a.free;
 	3.wait();

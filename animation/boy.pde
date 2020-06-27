@@ -1,4 +1,3 @@
-
 class Boy {
   int posX = 0;
   int posY = 0;
@@ -7,6 +6,8 @@ class Boy {
   float rArmA = 45;
   float lLegA = 260;
   float rLegA = 280;
+  
+  boolean happy = true;
   
   Boy(int initX, int initY){
     posX = initX;
@@ -34,12 +35,27 @@ class Boy {
     ellipse(-10,-3,6,6);//ojo izquierdo
     ellipse(10,-3,6,6);//ojo derecho
     fill(150);
-    arc(0, 10, 10, 10, 0, PI, OPEN);
+    if (happy){
+      arc(0, 10, 10, 10, 0, PI, OPEN);
+    } else {
+      arc(0, 10, 10, 10, PI, TWO_PI, OPEN);
+    }
     popMatrix();
+  }
+  
+  void setHappy(boolean happy){
+    this.happy = happy; 
   }
   
   void setPos(int posX, int posY){
     this.posX = posX;
     this.posY = posY;
+  }
+  
+  void setLAR(int a){
+    lArmA = a;
+  } 
+  void setRAR(int a){
+    rArmA = a;
   }
 }
